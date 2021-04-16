@@ -22,8 +22,31 @@ function init() {
      });
  };
 
+//  **Define function to retrieve variables from json**  //
+d3.json("samples.json").then(function(data) {
+     // Get values from the data json object to build the plots
+     // Default for initial plots
+     
+     var initialData = data.samples[0];
+     var initialValue = initialData.sample_values;
+     var initialOtuId = initialData.otu_ids;
+     var initialOtuLabel = initialData.otu_labels;
 
+     // other samples
+     var samples = data.samples;
+     var values = samples.map(objname => objname.id);
+     var otuIds = samples.map(objIds => objIds.otu_ids);
+     var otuLabels = samples.map(objLabels => objLabels.otu_labels); 
 
+     console.log(initialData);
+     console.log(initialValue);
+     console.log(initialOtuId);
+     console.log(initialOtuLabel);
+     console.log(samples);
+     console.log(values);
+     console.log(otuIds);
+     console.log(otuLabels);
+});
 
 
 //  **Define event handler for changing the selection in dropdown**  //
@@ -32,65 +55,43 @@ function init() {
 
 //  **Build plots**  //
 function buildPlot() {
-     d3.json("samples.json").then(function(data) {
-          // Get values from the data json object to build the plots
-          // Default for initial plots
-          var defaultData = data.samples[0];
-          var defaultValue = defaultData.sample_values;
-          var defaultOtuId = defaultData.otu_ids;
-          var defaultOtuLabel = defaultData.otu_labels;
 
-          // other samples
-          var allData = data.samples;
-          var values = allData.sample_values;
-          var otuIds = allData.otu_ids;
-          var otuLabels = allData.otu_labels; 
-
-          // console.log(defaultData);
-          // console.log(defaultValue);
-          // console.log(defaultOtuId);
-          // console.log(defaultOtuLabel);
-          console.log(allData);
-          console.log(values);
-          console.log(otuIds);
-          console.log(otuLabels);
-
-
-// // <div id="bar">
-// // trace1
-// var trace1 = {
-//      x: ["put x array here"],
-//      y: ["put y array here"],
-//      type: "bar"
-// };
-
-// // Trace data in an array
-// var data = [trace1];
-
-// // Define layout
-// var layout = {
-//      title: "Put Title Here",
-//      xaxis: {title: "Put xTitle Here"},
-//      yaxis: {title: "Put yTitle Here"}
-// };
-
-// // Call the plot
-// Plotly.newPlot("plot", data, layout);
-
-
-
-
-
-
-
-
-
-
-
-     });
+// <div id="bar">
+// trace1
+var trace1 = {
+     x: initialValue,
+     y: initialOtuId,
+     type: "h"
 };
 
-buildPlot();
+// Trace data in an array
+var data = [trace1];
+
+// Define layout
+var layout = {
+     title: "Put Title Here",
+     // xaxis: {title: "Put xTitle Here"},
+     // yaxis: {title: "Put yTitle Here"}
+};
+
+// Call the plot
+Plotly.newPlot("bar", data, layout);
+
+};
+
+
+
+
+
+
+
+
+
+
+//      });
+// };
+
+// buildPlot();
 
 // <div id="gauge">
 // <div id="bubble">
