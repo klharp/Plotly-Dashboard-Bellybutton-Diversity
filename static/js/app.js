@@ -1,7 +1,7 @@
 //  **Import of json data**  //
 // Use D3 fetch to read the JSON file and occupy the sample IDs dropdown
 // Get data for the dropdown options by using data binding. See class lecture on D3-1, example 3
-d3.json("samples.json").then(function(importdata) {
+d3.json("data/samples.json").then(function(importdata) {
 
      // Define a variable for the imported data
      alldata = importdata;
@@ -68,9 +68,9 @@ d3.json("samples.json").then(function(importdata) {
 
           // Define layout
           var layout = {
-               title: "Put Title Here",
-               // xaxis: {title: "Put xTitle Here"},
-               // yaxis: {title: "Put yTitle Here"}
+               title: "Top 10 OTUs",
+               xaxis: {title: "Sample Value"},
+               yaxis: {title: "OTU ID"}
           };
 
           // Call the plot
