@@ -89,6 +89,7 @@ function drawBubbleChart(sampleId) {
                margin: {t: 0},
                hovermode: "closest",
                xaxis: {title: "OTU ID"},
+               yaxis: {title: "Sample Values"},
                margin: {t: 30}
           }
      
