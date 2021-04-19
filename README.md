@@ -4,7 +4,7 @@ Built an interactive dashboard to explore the [Belly Button Biodiversity dataset
 
 D3, Plotly, Javascript, HTML, and CSS were used in this exercise.
 
-The final app can be viewed at: <--add web site here when done-->
+The final app can be viewed at: https://klharp.github.io/plotly-challenge/
 
   ![Dashboard](Images/dashboard.png)
 
