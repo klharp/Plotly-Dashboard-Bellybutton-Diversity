@@ -52,7 +52,7 @@ function drawBarGraph(sampleId) {
 
 // Function for bubble chart
 function drawBubbleChart(sampleId) {
-     console.log(`drawBubbleChart(${sampleId})`);
+     //console.log(`drawBubbleChart(${sampleId})`);
 
      //Reading data each time drawing a graph
      d3.json("data/samples.json").then(data => {
@@ -66,9 +66,7 @@ function drawBubbleChart(sampleId) {
           var otu_ids = result.otu_ids;
           var otu_labels = result.otu_labels;
           var sample_values = result.sample_values
-     
-         // yticks = otu_ids.slice(0,10).map(otuId => `OTU ${otuId}`).reverse();
-     
+          
           // https://plotly.com/javascript/bubble-charts/
           var bubbleData = {
                x: otu_ids,
@@ -98,9 +96,27 @@ function drawBubbleChart(sampleId) {
      
 }
 
-// Function for Metadata
+// Function for Metadata, extract key:value pairs
+// Class lecture Javascript II, Object iteration (07).
 function showMetadata(sampleId) {
      console.log(`showMetadata(${sampleId})`);
+
+     //Reading data each time drawing a graph
+     d3.json("data/samples.json").then(data => {
+          //console.log(data);
+     
+          var samples = data.metadata;
+          // Filter samples where sample id = desired sample id
+          var resultArray = samples.filter(s => s.id == sampleId);
+          var result = resultArray[0];
+          //console.log(result);
+
+          var metaPanel = d3.select("#sample-metadata");
+          metaPanel.html("");
+          Object.entries(result).forEach(([key, value]) => {
+               metaPanel.append("h6").text(`${key}: ${value}`)
+          });
+     });
 }
 
 // Function for Gauge Gauge
