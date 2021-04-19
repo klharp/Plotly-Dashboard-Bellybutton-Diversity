@@ -42,6 +42,7 @@ function drawBarGraph(sampleId) {
 
           var barLayout = {
                title: "Top 10 Bacteria Cultures Found",
+               titlefont: { size: 20, },
                margin: {t: 40, l: 100}
           }
 
@@ -84,6 +85,7 @@ function drawBubbleChart(sampleId) {
 
           var bubbleLayout = {
                title: "Sample Bacteria Cultures",
+               titlefont: { size: 20, },
                margin: {t: 0},
                hovermode: "closest",
                xaxis: {title: "OTU ID"},
@@ -141,7 +143,8 @@ function drawGauge(sampleId) {
                type: "indicator",
                mode: "gauge+number",
                value: result.wfreq,
-               title: { text: "Belly Button Washing Frequency <br> Scrubs Per Week"},
+               title: "Belly Button Washing Frequency <br> Scrubs Per Week", 
+               titlefont: { size: 20, },
                gauge: {
                     axis: { visible: true, range: [null, 9], tickmode: "linear", nticks:10},
                     bar: {'color': "black"},
@@ -159,11 +162,11 @@ function drawGauge(sampleId) {
                }
            }];
         
-     var gaugelayout = {
-     width: 450,
-     height: 500,
-     margin: { t: 0, l: 0, b: 0, r:0},
-     };
+          var gaugelayout = {
+          width: 450,
+          height: 500,
+          margin: { t: 0, l: 0, b: 0, r:0},
+          };
         
      Plotly.newPlot("gauge", gaugedata, gaugelayout);
 
