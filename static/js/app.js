@@ -4,7 +4,39 @@
 // I decided to redo the code based on the office hours tutorial.
 // That initial code exists as previous commits in Github.
 
- //  **Use D3 fetch to read the JSON file and occupy the sample IDs dropdown**  //
+// Define plotting/graphing functions
+// Function for bar graph
+function drawBarGraph(sampleID) {
+     console.log(`drawBarGraph(${sampleID})`);
+}
+
+// Function for bubble chart
+function drawBubbleChart(sampleID) {
+     console.log(`drawBubbleChart(${sampleID})`);
+}
+
+// Function for Metadata
+function showMetadata(sampleID) {
+     console.log(`showMetadata(${sampleID})`);
+}
+
+// Function for Gauge Gauge
+function drawGauge(sampleID) {
+     console.log(`drawGauge(${sampleID})`);
+}
+
+// Establish event handler
+function optionChanged(newSampleID){
+     console.log(`User selected ${newSampleID}`);
+
+     drawBarGraph(newSampleID);
+     drawBubbleChart(newSampleID);
+     showMetadata(newSampleID);
+
+}
+
+
+ // Use D3 fetch to read the JSON file and occupy the sample IDs dropdown
  function init() { 
 
      // Populate the dropdown
@@ -14,14 +46,25 @@
           console.log(data);
 
           var sampleNames = data.names;
-          console.log(sampleNames);
+          // console.log(sampleNames);
 
           sampleNames.forEach(sampleID => {
                selector.append("option")
                     .text(sampleID)
                     .property("value", sampleID);
           });
+
+          // Define the default id
+          var id = sampleNames[0]
+
+          // Define plotting/drawing
+          drawBarGraph(id);
+          drawBubbleChart(id);
+          showMetadata(id);
+          drawGauge(id);
+         
      });
+
 
 }
 
