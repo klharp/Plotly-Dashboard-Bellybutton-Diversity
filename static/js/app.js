@@ -7,7 +7,7 @@
 // Define plotting/graphing functions
 // Function for bar graph
 function drawBarGraph(sampleId) {
-     console.log(`drawBarGraph(${sampleId})`);
+     //console.log(`drawBarGraph(${sampleId})`);
 
      //Reading data each time drawing a graph
      d3.json("data/samples.json").then(data => {
@@ -34,7 +34,8 @@ function drawBarGraph(sampleId) {
                y: yticks,
                type: "bar",
                text: otu_labels.slice(0,10).reverse(),
-               orientation: "h"
+               orientation: "h",
+               marker: {color: "red"}
           }
 
           var barArray = [barData];
@@ -46,14 +47,55 @@ function drawBarGraph(sampleId) {
 
           // Div id=bar
           Plotly.newPlot("bar", barArray, barLayout)
-
-
      });
 }
 
 // Function for bubble chart
 function drawBubbleChart(sampleId) {
      console.log(`drawBubbleChart(${sampleId})`);
+
+     //Reading data each time drawing a graph
+     d3.json("data/samples.json").then(data => {
+          //console.log(data);
+     
+          var samples = data.samples;
+          // Filter samples where sample id = desired sample id
+          var resultArray = samples.filter(s => s.id == sampleId);
+          var result = resultArray[0];
+     
+          var otu_ids = result.otu_ids;
+          var otu_labels = result.otu_labels;
+          var sample_values = result.sample_values
+     
+         // yticks = otu_ids.slice(0,10).map(otuId => `OTU ${otuId}`).reverse();
+     
+          // https://plotly.com/javascript/bubble-charts/
+          var bubbleData = {
+               x: otu_ids,
+               y: sample_values,
+               text: otu_labels,
+               mode: "markers",
+               marker: {
+                    size: sample_values,
+                    color: otu_ids,
+                    colorscale: "Picnic"
+               }
+          }
+
+          var bubbleArray = [bubbleData];
+
+          var bubbleLayout = {
+               title: "Sample Bacteria Cultures",
+               margin: {t: 0},
+               hovermode: "closest",
+               xaxis: {title: "OTU ID"},
+               margin: {t: 30}
+          }
+     
+          // Div id=bubble
+          Plotly.newPlot("bubble", bubbleArray, bubbleLayout)
+     });
+     
 }
 
 // Function for Metadata
