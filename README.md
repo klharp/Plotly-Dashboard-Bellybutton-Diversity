@@ -12,20 +12,20 @@ The final app can be viewed at: <--add web site here when done-->
 
 ## Step 1: Plotly
 
-1. Used the D3 library to read in `samples.json`.
+1. Used the D3 library to read in the provided `samples.json`.
 
-2. Occupied the dropdown menu.
+2. Occupied the dropdown menu to allow for selection individual samples to see the data. Sample 940 is the default.
 
-3. Created a horizontal bar chart  to display the top 10 OTUs found in that individual.
+3. Created a horizontal bar chart to display the top 10 OTUs found in each individual sample.
 
 
     ![Bar Chart](Images/bar.png)
 
-4. Created a bubble chart that displays each sample.
+4. Created a bubble chart that displays each sample's values by OTU ID.
 
     ![Bubble Chart](Images/bubble.png)
 
-5. Displayed the sample metadata, i.e., an individual's sample demographic information as key-value pairs.
+5. Displayed the sample metadata as key-value pairs.
 
     ![Meta Data](Images/meta.png)
 
@@ -33,7 +33,7 @@ The final app can be viewed at: <--add web site here when done-->
 
 ## Step 2:  Challenge  
 
-Added a gauge to show the weekly washing frequency of the individual sample.
+Added a gauge to show the weekly washing frequency of the selected sample.
 
   ![Gauge](Images/gauge.png)
 
