@@ -182,7 +182,7 @@ function optionChanged(newsampleId){
      drawBarGraph(newsampleId);
      drawBubbleChart(newsampleId);
      showMetadata(newsampleId);
-
+     drawGauge(newsampleId);
 }
 
 
