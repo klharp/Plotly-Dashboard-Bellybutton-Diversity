@@ -1,37 +1,78 @@
 // Portions of this code are taken directly from instructor's office hours tutorial 
 // Permission was given to use.
-// I had previously successfully imported the json and occupied the dropdown.
+// I had previously successfully imported the json, occupied the dropdown and put data into variables.
 // I decided to redo the code based on the office hours tutorial.
 // That initial code exists as previous commits in Github.
 
 // Define plotting/graphing functions
 // Function for bar graph
-function drawBarGraph(sampleID) {
-     console.log(`drawBarGraph(${sampleID})`);
+function drawBarGraph(sampleId) {
+     console.log(`drawBarGraph(${sampleId})`);
+
+     //Reading data each time drawing a graph
+     d3.json("data/samples.json").then(data => {
+          //console.log(data);
+
+          var samples = data.samples;
+          // Filter samples where sample id = desired sample id
+          var resultArray = samples.filter(s => s.id == sampleId);
+          //console.log(resultArray);
+          var result = resultArray[0];
+          //console.log(result);
+
+          var otu_ids = result.otu_ids;
+          var otu_labels = result.otu_labels;
+          var sample_values = result.sample_values
+          //console.log(otu_ids);
+          //console.log(otu_labels);
+          //console.log(sample_values);
+
+          yticks = otu_ids.slice(0,10).map(otuId => `OTU ${otuId}`).reverse();
+
+          var barData = {
+               x: sample_values.slice(0,10).reverse(),
+               y: yticks,
+               type: "bar",
+               text: otu_labels.slice(0,10).reverse(),
+               orientation: "h"
+          }
+
+          var barArray = [barData];
+
+          var barLayout = {
+               title: "Top 10 Bacteria Cultures Found",
+               margin: {t: 40, l: 100}
+          }
+
+          // Div id=bar
+          Plotly.newPlot("bar", barArray, barLayout)
+
+
+     });
 }
 
 // Function for bubble chart
-function drawBubbleChart(sampleID) {
-     console.log(`drawBubbleChart(${sampleID})`);
+function drawBubbleChart(sampleId) {
+     console.log(`drawBubbleChart(${sampleId})`);
 }
 
 // Function for Metadata
-function showMetadata(sampleID) {
-     console.log(`showMetadata(${sampleID})`);
+function showMetadata(sampleId) {
+     console.log(`showMetadata(${sampleId})`);
 }
 
 // Function for Gauge Gauge
-function drawGauge(sampleID) {
-     console.log(`drawGauge(${sampleID})`);
+function drawGauge(sampleId) {
+     console.log(`drawGauge(${sampleId})`);
 }
 
 // Establish event handler
-function optionChanged(newSampleID){
-     console.log(`User selected ${newSampleID}`);
+function optionChanged(newsampleId){
+     console.log(`User selected ${newsampleId}`);
 
-     drawBarGraph(newSampleID);
-     drawBubbleChart(newSampleID);
-     showMetadata(newSampleID);
+     drawBarGraph(newsampleId);
+     drawBubbleChart(newsampleId);
+     showMetadata(newsampleId);
 
 }
 
@@ -48,16 +89,16 @@ function optionChanged(newSampleID){
           var sampleNames = data.names;
           // console.log(sampleNames);
 
-          sampleNames.forEach(sampleID => {
+          sampleNames.forEach(sampleId => {
                selector.append("option")
-                    .text(sampleID)
-                    .property("value", sampleID);
+                    .text(sampleId)
+                    .property("value", sampleId);
           });
 
           // Define the default id
           var id = sampleNames[0]
 
-          // Define plotting/drawing
+          // Calling plotting/drawing functions
           drawBarGraph(id);
           drawBubbleChart(id);
           showMetadata(id);
