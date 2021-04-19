@@ -3,13 +3,13 @@
 // I had previously successfully imported the json, occupied the dropdown and put data into variables.
 // I decided to redo the code based on the office hours tutorial.
 // That initial code exists as previous commits in Github.
+// Met with tutor to help to understand functions and to clean up the function code.
 
-// Define plotting/graphing functions
-// Function for bar graph
-function drawBarGraph(sampleId) {
-     //console.log(`drawBarGraph(${sampleId})`);
+// Function for graphs
+function drawGraphs(sampleId) {
+     //console.log(`drawGraphs(${sampleId})`);
 
-     //Reading data each time drawing a graph
+     //Reading sample data to draw graphs
      d3.json("data/samples.json").then(data => {
           //console.log(data);
 
@@ -27,15 +27,16 @@ function drawBarGraph(sampleId) {
           //console.log(otu_labels);
           //console.log(sample_values);
 
-          yticks = otu_ids.slice(0,10).map(otuId => `OTU ${otuId} `).reverse();
+          // Bar chart
+          yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId} `).reverse();
 
           var barData = {
-               x: sample_values.slice(0,10).reverse(),
+               x: sample_values.slice(0, 10).reverse(),
                y: yticks,
                type: "bar",
-               text: otu_labels.slice(0,10).reverse(),
+               text: otu_labels.slice(0, 10).reverse(),
                orientation: "h",
-               marker: {color: "#ff4d4d"} //{color: "#ff94c9"}
+               marker: { color: "#ff4d4d" } //{color: "#ff94c9"}
           }
 
           var barArray = [barData];
@@ -43,31 +44,13 @@ function drawBarGraph(sampleId) {
           var barLayout = {
                title: "Top 10 Bacteria Cultures Found",
                titlefont: { size: 20, },
-               margin: {t: 40, l: 100}
+               margin: { t: 40, l: 100 }
           }
 
           // Div id=bar
           Plotly.newPlot("bar", barArray, barLayout)
-     });
-}
 
-// Function for bubble chart
-function drawBubbleChart(sampleId) {
-     //console.log(`drawBubbleChart(${sampleId})`);
-
-     //Reading data each time drawing a graph
-     d3.json("data/samples.json").then(data => {
-          //console.log(data);
-     
-          var samples = data.samples;
-          // Filter samples where sample id = desired sample id
-          var resultArray = samples.filter(s => s.id == sampleId);
-          var result = resultArray[0];
-     
-          var otu_ids = result.otu_ids;
-          var otu_labels = result.otu_labels;
-          var sample_values = result.sample_values
-          
+          // Bubble chart
           // https://plotly.com/javascript/bubble-charts/
           var bubbleData = {
                x: otu_ids,
@@ -86,69 +69,53 @@ function drawBubbleChart(sampleId) {
           var bubbleLayout = {
                title: "Sample Bacteria Cultures",
                titlefont: { size: 20, },
-               margin: {t: 0},
+               margin: { t: 0 },
                hovermode: "closest",
-               xaxis: {title: "OTU ID"},
-               yaxis: {title: "Sample Values"},
-               margin: {t: 30}
+               xaxis: { title: "OTU ID" },
+               yaxis: { title: "Sample Values" },
+               margin: { t: 30 }
           }
-     
+
           // Div id=bubble
           Plotly.newPlot("bubble", bubbleArray, bubbleLayout)
-     });    
+     });
 }
 
 
-// Function for Metadata, extract key:value pairs
-// Class lecture Javascript II, Object iteration (07).
+// Function for Metadata 
 function showMetadata(sampleId) {
      //console.log(`showMetadata(${sampleId})`);
 
-     //Reading data each time drawing a graph
+     //Reading metadata for table and gauge
      d3.json("data/samples.json").then(data => {
           //console.log(data);
-     
+
           var samples = data.metadata;
           // Filter samples where sample id = desired sample id
           var resultArray = samples.filter(s => s.id == sampleId);
           var result = resultArray[0];
           //console.log(result);
 
+          // Demographic info
+          // Class lecture Javascript II, Object iteration (07) to extract key:value pairs
           // https://stackoverflow.com/questions/26629180/changing-the-case-of-javascript-object-keysvar 
           metaPanel = d3.select("#sample-metadata");
           metaPanel.html("");
           Object.entries(result).forEach(([key, value]) => {
                metaPanel.append("h6").text(`${key.toUpperCase()}: ${value}`)
           });
-     });
-}
 
-
-// Function for Gauge Gauge
-//https://plotly.com/javascript/gauge-charts/
-function drawGauge(sampleId) {
-     //console.log(`drawGauge(${sampleId})`);
-
-     //Reading data each time drawing a graph
-     d3.json("data/samples.json").then(data => {
-          //console.log(data);
-          
-          var samples = data.metadata;
-          // Filter samples where sample id = desired sample id
-          var resultArray = samples.filter(s => s.id == sampleId);
-          var result = resultArray[0];
-          //console.log(result);
-
-          var gaugedata = [ {
-               //domain: { x:[0,1], y:[0,1] },
+          // Gauge
+          //https://plotly.com/javascript/gauge-charts/
+          var gaugedata = [{
                type: "indicator",
                mode: "gauge+number",
                value: result.wfreq,
-               title: "Belly Button Washing Frequency <br> Scrubs Per Week", 
+               title: "Belly Button Washing Frequency <br> Scrubs Per Week",
                titlefont: { size: 20, },
                gauge: {
-                    axis: { visible: true, range: [null, 9], tickmode: "linear", nticks:10},
-                    bar: {'color': "black"},
+                    axis: { visible: true, range: [null, 9], tickmode: "linear", nticks: 10 },
+                    bar: { 'color': "black" },
                     steps: [
                          { range: [0, 1], color: "rgb(15,42,251)" },
                          { range: [1, 2], color: "rgb(43,114,251)" },
@@ -161,33 +128,30 @@ function drawGauge(sampleId) {
                          { range: [8, 9], color: "rgb(252,18,31)" },
                     ]
                }
-           }];
-        
-          var gaugelayout = {
-          width: 450,
-          height: 500,
-          margin: { t: 0, l: 0, b: 0, r:0},
-          };
-        
-     Plotly.newPlot("gauge", gaugedata, gaugelayout);
+          }];
 
-     });       
+          var gaugelayout = {
+               width: 450,
+               height: 500,
+               margin: { t: 0, l: 0, b: 0, r: 0 },
+          };
+
+          Plotly.newPlot("gauge", gaugedata, gaugelayout);
+     });
 }
 
 
 // Establish event handler
-function optionChanged(newsampleId){
+function optionChanged(newsampleId) {
      //console.log(`User selected ${newsampleId}`);
 
-     drawBarGraph(newsampleId);
-     drawBubbleChart(newsampleId);
+     drawGraphs(newsampleId);
      showMetadata(newsampleId);
-     drawGauge(newsampleId);
 }
 
 
- // Use D3 fetch to read the JSON file and occupy the sample IDs dropdown
- function init() { 
+// Use D3 fetch to read the JSON file and occupy the sample IDs dropdown
+function init() {
 
      // Populate the dropdown
      var selector = d3.select("#selDataset");
@@ -208,12 +172,10 @@ function optionChanged(newsampleId){
           var id = sampleNames[0]
 
           // Calling plotting/drawing functions
-          drawBarGraph(id);
-          drawBubbleChart(id);
+          drawGraphs(id);
           showMetadata(id);
-          drawGauge(id);
-         
+
      });
 }
 
- init();
+init();
