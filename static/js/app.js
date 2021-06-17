@@ -108,6 +108,7 @@ function showMetadata(sampleId) {
           // Gauge
           //https://plotly.com/javascript/gauge-charts/
           var gaugedata = [{
+               domain: { x:[0,1], y:[1,9] },
                type: "indicator",
                mode: "gauge+number",
                value: result.wfreq,
@@ -158,6 +159,7 @@ function init() {
 
      d3.json("data/samples.json").then(data => {
           console.log(data);
+          console.log(data.names);
 
           var sampleNames = data.names;
           // console.log(sampleNames);

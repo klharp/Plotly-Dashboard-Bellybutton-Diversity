@@ -1,14 +1,23 @@
 # Plot.ly Homework - Belly Button Biodiversity
 
-Built an interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels.
+## Project Overview
+An interactive dashboard was designed to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels.
 
-D3, Plotly, Javascript, HTML, and CSS were used in this exercise.
+
+Languages and libraries used:
+
+* Javascript
+* Plotly
+* D3
+* HTML
+* CSS
+
 
 The final app can be viewed at: https://klharp.github.io/plotly-challenge/
 
   ![Dashboard](Images/dashboard.png)
 
-
+---
 
 ## Step 1: Plotly
 
